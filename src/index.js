@@ -2,15 +2,22 @@ import http from 'http'
 import {parse} from 'url'
 
 import commuter from 'commuter'
+import extend from 'xtend'
 
 export default createProxyServer
 
 function createProxyServer (frock, logger, options = {}) {
-  const {contentType, url, defaultHeaders = {}} = options
+  const {
+    url,
+    requestHeaders = {},
+    responseHeaders = {}
+  } = options
+
   const parsedUrl = parse(url)
   const router = commuter(proxyHandler, options.baseUrl)
 
   router.end = () => {}
+  router.validate = validate
 
   return router
 
@@ -26,17 +33,35 @@ function createProxyServer (frock, logger, options = {}) {
     handle = http.request(reqOpts, proxyRes => {
       const headers = proxyRes.headers
 
-      Object.keys(headers).forEach(header => {
-        res.setHeader(header, headers[header])
-      })
+      setHeadersFromObject(res, extend(headers, responseHeaders))
 
       res.statusCode = proxyRes.statusCode
 
       proxyRes.pipe(res)
+
+      logger(
+        'info',
+        `${url} <- ${req.method}[${res.statusCode}] ${req.url}`,
+        reqOpts
+      )
     })
 
-    req.pipe(handle)
+    setHeadersFromObject(handle, requestHeaders)
 
-    logger('info', `${req.method} ${req.url}`, reqOpts)
+    req.pipe(handle)
   }
+}
+
+function validate ({url}) {
+  if (!url) {
+    return {
+      url: 'Url is required.'
+    }
+  }
+}
+
+function setHeadersFromObject (reqRes, headersObj) {
+  Object.keys(headersObj).forEach(header => {
+    reqRes.setHeader(header, headersObj[header])
+  })
 }
