@@ -17,7 +17,6 @@ function createProxyServer (frock, logger, options = {}) {
   const router = commuter(proxyHandler, options.baseUrl)
 
   router.end = () => {}
-  router.validate = validate
 
   return router
 
@@ -51,6 +50,8 @@ function createProxyServer (frock, logger, options = {}) {
     req.pipe(handle)
   }
 }
+
+createProxyServer.validate = validate
 
 function validate ({url}) {
   if (!url) {
