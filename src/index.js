@@ -1,4 +1,5 @@
 import http from 'http'
+import https from 'https'
 import {parse} from 'url'
 
 import commuter from 'commuter'
@@ -9,6 +10,7 @@ export default createProxyServer
 function createProxyServer (frock, logger, options = {}) {
   const {
     url,
+    strictSsl = true,
     requestHeaders = {},
     responseHeaders = {}
   } = options
@@ -23,13 +25,19 @@ function createProxyServer (frock, logger, options = {}) {
   function proxyHandler (req, res) {
     const reqOpts = JSON.parse(JSON.stringify(parsedUrl))
 
+    let request = http.request
     let handle
 
     reqOpts.path = req.url
     reqOpts.method = req.method
     reqOpts.headers = req.headers
 
-    handle = http.request(reqOpts, proxyRes => {
+    if (reqOpts.protocol === 'https') {
+      request = https.request
+      reqOpts.rejectUnauthorized = strictSsl
+    }
+
+    handle = request(reqOpts, proxyRes => {
       const headers = proxyRes.headers
 
       setHeadersFromObject(res, extend(headers, responseHeaders))
