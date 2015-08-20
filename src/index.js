@@ -18,7 +18,10 @@ function createProxyServer (frock, logger, options = {}) {
   const parsedUrl = parse(url)
   const router = commuter(proxyHandler, options.baseUrl)
 
-  router.end = () => {}
+  router.end = (ready = noop) => {
+    logger('debug', 'ending')
+    ready()
+  }
 
   return router
 
@@ -73,4 +76,8 @@ function setHeadersFromObject (reqRes, headersObj) {
   Object.keys(headersObj).forEach(header => {
     reqRes.setHeader(header, headersObj[header])
   })
+}
+
+function noop () {
+  // nothing
 }
