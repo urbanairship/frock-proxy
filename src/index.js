@@ -50,7 +50,7 @@ function createProxyServer (frock, logger, options = {}) {
       proxyRes.pipe(res)
 
       logger(
-        'info',
+        'debug',
         `${url} <- ${req.method}[${res.statusCode}] ${req.url}`,
         reqOpts
       )
