@@ -19,7 +19,7 @@ function createProxyServer (frock, logger, options = {}) {
   const router = commuter(proxyHandler, options.baseUrl)
 
   router.end = (ready = noop) => {
-    logger('debug', 'ending')
+    logger.debug('ending')
     ready()
   }
 
@@ -49,8 +49,7 @@ function createProxyServer (frock, logger, options = {}) {
 
       proxyRes.pipe(res)
 
-      logger(
-        'debug',
+      logger.debug(
         `${url} <- ${req.method}[${res.statusCode}] ${req.url}`,
         reqOpts
       )
