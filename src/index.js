@@ -43,8 +43,9 @@ function createProxyServer (frock, logger, options = {}) {
     handle = request(reqOpts, proxyRes => {
       const headers = proxyRes.headers
 
-      setHeadersFromObject(res, extend(headers, responseHeaders))
+      proxyRes.on('error', onError)
 
+      setHeadersFromObject(res, extend(headers, responseHeaders))
       res.statusCode = proxyRes.statusCode
 
       proxyRes.pipe(res)
@@ -55,9 +56,18 @@ function createProxyServer (frock, logger, options = {}) {
       )
     })
 
+    handle.on('error', onError)
+
     setHeadersFromObject(handle, requestHeaders)
 
     req.pipe(handle)
+
+    function onError (err) {
+      logger.error('proxy error', err)
+
+      res.statusCode = 500
+      res.end(err.toString() || 'proxy error occurred')
+    }
   }
 }
 
