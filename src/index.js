@@ -2,7 +2,6 @@ import http from 'http'
 import https from 'https'
 import {parse} from 'url'
 
-import commuter from 'commuter'
 import extend from 'xtend'
 
 export default createProxyServer
@@ -16,7 +15,7 @@ function createProxyServer (frock, logger, options = {}) {
   } = options
 
   const parsedUrl = parse(url)
-  const router = commuter(proxyHandler, options.baseUrl)
+  const router = frock.router(proxyHandler)
 
   router.end = (ready = noop) => {
     logger.debug('ending')

@@ -12,7 +12,6 @@
   "author": "Urban Airship",
   "license": "Apache-2.0",
   "dependencies": {
-    "commuter": "^2.0.0",
     "xtend": "^4.0.0"
   },
   "devDependencies": {
