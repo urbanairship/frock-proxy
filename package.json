@@ -12,6 +12,7 @@
   "author": "Urban Airship",
   "license": "Apache-2.0",
   "dependencies": {
+    "core-js": "^1.1.4",
     "xtend": "^4.0.0"
   },
   "devDependencies": {
