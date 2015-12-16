@@ -1,7 +1,13 @@
 # frock-proxy
 
-A proxy plugin for `frock`, it makes requests on your behalf, and allows a very
-light amount of rewriting to take place.
+A proxy plugin for `frock`.
+
+[![Build Status](http://img.shields.io/travis/urbanairship/frock-proxy/master.svg?style=flat-square)](https://travis-ci.org/urbanairship/frock-proxy)
+[![npm install](http://img.shields.io/npm/dm/frock-proxy.svg?style=flat-square)](https://www.npmjs.org/package/frock-proxy)
+[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/feross/standard)
+
+It makes requests to other servers on your behalf, allowing you to bring data
+from external services to your local environment.
 
 ## `frockfile` Example
 

@@ -1,10 +1,12 @@
-import 'core-js/shim'
+try {
+  require('babel-polyfill')
+} catch (e) {
+  // babel polyfill throws if it's ever included in any other module
+}
 
-import http from 'http'
-import https from 'https'
-import {parse} from 'url'
-
-import extend from 'xtend'
+const http = require('http')
+const https = require('https')
+const {parse} = require('url')
 
 export default createProxyServer
 
@@ -46,7 +48,7 @@ function createProxyServer (frock, logger, options = {}) {
 
       proxyRes.on('error', onError)
 
-      setHeadersFromObject(res, extend(headers, responseHeaders))
+      setHeadersFromObject(res, Object.assign({}, headers, responseHeaders))
       res.statusCode = proxyRes.statusCode
 
       proxyRes.pipe(res)
