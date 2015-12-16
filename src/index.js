@@ -8,7 +8,7 @@ const http = require('http')
 const https = require('https')
 const {parse} = require('url')
 
-export default createProxyServer
+module.exports = createProxyServer
 
 function createProxyServer (frock, logger, options = {}) {
   const {
