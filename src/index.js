@@ -38,7 +38,7 @@ function createProxyServer (frock, logger, options = {}) {
     reqOpts.method = req.method
     reqOpts.headers = req.headers
 
-    if (reqOpts.protocol === 'https') {
+    if (reqOpts.protocol && reqOpts.protocol.includes('https')) {
       request = https.request
       reqOpts.rejectUnauthorized = strictSsl
     }
