@@ -1,6 +1,6 @@
 {
   "name": "frock-proxy",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "A proxy plugin for frock",
   "main": "lib/index.js",
   "scripts": {
@@ -39,7 +39,7 @@
     "through": "^2.3.8"
   },
   "frock": {
-    "compatible-versions": "0.1.0 - 0.9.*"
+    "compatible-versions": "1.*"
   },
   "babel": {
     "presets": [
