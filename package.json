@@ -39,7 +39,7 @@
     "through": "^2.3.8"
   },
   "frock": {
-    "compatible-versions": "^1.0.0 || ^2.0.0"
+    "compatible-versions": "^2.0.0"
   },
   "babel": {
     "presets": [
