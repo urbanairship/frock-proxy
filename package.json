@@ -20,6 +20,9 @@
     "url": "https://github.com/urbanairship/frock-proxy/issues"
   },
   "homepage": "https://github.com/urbanairship/frock-proxy#readme",
+  "engines": {
+    "node": ">=24"
+  },
   "dependencies": {},
   "devDependencies": {
     "commuter": "^2.0.0",
